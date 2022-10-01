@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
     @GetMapping("/") //if an HTTP GET request is received for the root path /, then this method should handle that request
     public String home() {
-        return "Home";
+        return "home";
     }
 }
