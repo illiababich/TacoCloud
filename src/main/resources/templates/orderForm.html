@@ -1,4 +1,3 @@
-<!-- tag::allButValidation[] -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
@@ -12,7 +11,9 @@
 <form method="POST" th:action="@{/orders}" th:object="${tacoOrder}">
     <h1>Order your taco creations!</h1>
 
-    <img th:src="@{/images/TacoCloud.png}"/>
+    <img alt="image not found"
+         width="500" height="500"
+         th:src="@{/images/TacoCloud.png}"/>
 
     <h3>Your tacos in this order:</h3>
     <a th:href="@{/design}" id="another">Design another taco</a><br/>

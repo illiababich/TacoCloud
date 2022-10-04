@@ -1,30 +1,30 @@
 package tacocloud.controllers;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
-import tacocloud.Ingredients;
-import tacocloud.Taco;
-import tacocloud.TacoOrder;
-import tacocloud.Type;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-import javax.validation.Valid;
-import org.springframework.validation.Errors;
+import lombok.extern.slf4j.Slf4j;
+import tacocloud.Ingredients;
+import tacocloud.Type;
+import tacocloud.Taco;
+import tacocloud.TacoOrder;
 
 @Slf4j
 @Controller
 @RequestMapping("/design")
-@SessionAttributes
+@SessionAttributes("tacoOrder")
 public class DesignTacoController {
 
     @ModelAttribute
-    public void addIngredientsToModel (Model model) {
+    public void addIngredientsToModel(Model model) {
         List<Ingredients> ingredients = Arrays.asList(
                 new Ingredients("FLTO", "Flour Tortilla", Type.WRAP),
                 new Ingredients("COTO", "Corn Tortilla", Type.WRAP),
@@ -39,7 +39,6 @@ public class DesignTacoController {
         );
 
         Type[] types = Type.values();
-
         for (Type type : types) {
             model.addAttribute(type.toString().toLowerCase(),
                     filterByType(ingredients, type));
@@ -61,7 +60,7 @@ public class DesignTacoController {
         return "design";
     }
 
-    /*
+
     @PostMapping
     public String processTaco(Taco taco, @ModelAttribute TacoOrder tacoOrder) {
         tacoOrder.addTaco(taco);
@@ -69,8 +68,8 @@ public class DesignTacoController {
 
         return "redirect:/orders/current";
     }
-     */
 
+/*
     @PostMapping
     public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder) {
 
@@ -83,6 +82,8 @@ public class DesignTacoController {
 
         return "redirect:/orders/current";
     }
+
+ */
 
     private Iterable<Ingredients> filterByType(List<Ingredients> ingredients, Type type) {
         return ingredients
