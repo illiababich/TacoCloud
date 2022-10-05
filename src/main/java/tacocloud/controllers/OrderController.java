@@ -25,8 +25,8 @@ public class OrderController {
     @PostMapping
     public String processOrder(@Valid TacoOrder order, Errors errors, SessionStatus sessionStatus) {
         if (errors.hasErrors()) {
-            //return "orderForm";
-            return "redirect:/orders/current";
+            return "orderForm";
+            //return "redirect:/orders/current";
         }
 
         log.info("Order submitted: {}", order);
