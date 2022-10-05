@@ -1,4 +1,4 @@
-package bia.tacocloud;
+package tacocloud;
 
 import tacocloud.controllers.HomeController;
 import org.junit.jupiter.api.Test;
