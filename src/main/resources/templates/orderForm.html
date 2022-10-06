@@ -9,12 +9,10 @@
 <body>
 
 <form method="POST" th:action="@{/orders}" th:object="${tacoOrder}">
-    <h1>Order your taco creations!</h1>
-
     <img alt="image not found"
-         width="500" height="500"
+         width="100" height="100"
          th:src="@{/images/TacoCloud.png}"/>
-
+    <h1>Order your taco creations!</h1>
     <h3>Your tacos in this order:</h3>
     <a th:href="@{/design}" id="another">Design another taco</a><br/>
     <ul>
@@ -28,7 +26,6 @@
         </span>
     </div>
 
-    <!-- tag::allButValidation[] -->
     <h3>Deliver my taco masterpieces to...</h3>
     <label for="deliveryName">Name: </label>
     <input type="text" th:field="*{deliveryName}"/>
@@ -70,7 +67,7 @@
     <input type="text" th:field="*{ccNumber}"/>
     <span class="validationError"
           th:if="${#fields.hasErrors('ccNumber')}"
-          th:errors="*{ccNumber}">CC  Error</span>
+          th:errors="*{ccNumber}">CC Num Error</span>
     <br/>
 
     <label for="ccExpiration">Expiration: </label>
