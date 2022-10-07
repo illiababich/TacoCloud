@@ -10,6 +10,9 @@ import tacocloud.Taco;
 
 @Data
 public class TacoOrder {
+    private static final long serialVersionUID = 1L;
+    private long id;
+    private Data placedAt;
 
     @NotBlank(message="Delivery name is required")
     private String deliveryName;

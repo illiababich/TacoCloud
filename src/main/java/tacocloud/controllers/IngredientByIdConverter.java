@@ -1,32 +1,23 @@
 package tacocloud.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-import tacocloud.Ingredients;
-import tacocloud.Type;
 
-import java.util.HashMap;
-import java.util.Map;
+import tacocloud.Ingredients;
+import tacocloud.data.IngredientRepository;
 
 @Component
 public class IngredientByIdConverter implements Converter<String, Ingredients> {
-    private final Map<String, Ingredients> ingredientsMap = new HashMap<>();
+    private IngredientRepository ingredientRepository;
 
-    public IngredientByIdConverter() {
-        ingredientsMap.put("FLTO", new Ingredients("FLTO", "Flour Tortilla", Type.WRAP));
-        ingredientsMap.put("COTO", new Ingredients("COTO", "Corn Tortilla", Type.WRAP));
-        ingredientsMap.put("GRBF", new Ingredients("GRBF", "Ground Beef", Type.MEAT));
-        ingredientsMap.put("CARN", new Ingredients("CARN", "Carnitas", Type.MEAT));
-        ingredientsMap.put("TMTO", new Ingredients("TMTO", "Diced Tomatoes", Type.VEGGIES));
-        ingredientsMap.put("LETC", new Ingredients("LETC", "Lettuce", Type.VEGGIES));
-        ingredientsMap.put("CHED", new Ingredients("CHED", "Cheddar", Type.CHEESE));
-        ingredientsMap.put("JACK", new Ingredients("JACK", "Monterrey Jack", Type.CHEESE));
-        ingredientsMap.put("SLSA", new Ingredients("SLSA", "Salsa", Type.SAUCE));
-        ingredientsMap.put("SRCR", new Ingredients("SRCR", "Sour Cream", Type.SAUCE));
+    @Autowired
+    public IngredientByIdConverter(IngredientRepository ingredientRepository) {
+        this.ingredientRepository = ingredientRepository;
     }
 
     @Override
     public Ingredients convert(String id) {
-        return ingredientsMap.get(id);
+        return ingredientRepository.findBiId(id).orElse(null);
     }
 }

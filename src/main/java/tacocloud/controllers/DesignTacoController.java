@@ -3,6 +3,9 @@ package tacocloud.controllers;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -17,6 +20,7 @@ import tacocloud.Ingredients;
 import tacocloud.Type;
 import tacocloud.Taco;
 import tacocloud.TacoOrder;
+import tacocloud.data.IngredientRepository;
 
 import javax.validation.Valid;
 
@@ -26,24 +30,21 @@ import javax.validation.Valid;
 @SessionAttributes("tacoOrder")
 public class DesignTacoController {
 
+    private final IngredientRepository ingredientRepository;
+
+    @Autowired
+    public DesignTacoController(IngredientRepository ingredientRepository) {
+        this.ingredientRepository = ingredientRepository;
+    }
+
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
-        List<Ingredients> ingredients = Arrays.asList(
-                new Ingredients("FLTO", "Flour Tortilla", Type.WRAP),
-                new Ingredients("COTO", "Corn Tortilla", Type.WRAP),
-                new Ingredients("GRBF", "Ground Beef", Type.MEAT),
-                new Ingredients("CARN", "Carnitas", Type.MEAT),
-                new Ingredients("TMTO", "Diced Tomatoes", Type.VEGGIES),
-                new Ingredients("LETC", "Lettuce", Type.VEGGIES),
-                new Ingredients("CHED", "Cheddar", Type.CHEESE),
-                new Ingredients("JACK", "Monterrey Jack", Type.CHEESE),
-                new Ingredients("SLSA", "Salsa", Type.SAUCE),
-                new Ingredients("SRCR", "Sour Cream", Type.SAUCE)
-        );
+        Iterable<Ingredients> ingredients = ingredientRepository.findAll();
 
         Type[] types = Type.values();
         for (Type type : types) {
-            model.addAttribute(type.toString().toLowerCase(),
+            model.addAttribute(
+                    type.toString().toLowerCase(),
                     filterByType(ingredients, type));
         }
     }
@@ -76,10 +77,10 @@ public class DesignTacoController {
         return "redirect:/orders/current";
     }
 
-    private Iterable<Ingredients> filterByType(List<Ingredients> ingredients, Type type) {
-        return ingredients
-                .stream()
-                .filter(x -> x.getType().equals(type))
+    private Iterable<Ingredients> filterByType(Iterable<Ingredients> ingredients, Type type) {
+        return StreamSupport.stream(
+                ingredients.spliterator(), false)
+                .filter(i -> i.getType().equals(type))
                 .collect(Collectors.toList());
     }
 }
