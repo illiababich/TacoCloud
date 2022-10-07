@@ -1,7 +1,5 @@
 package tacocloud.controllers;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import lombok.extern.slf4j.Slf4j;
 import tacocloud.Ingredients;
 import tacocloud.Type;
 import tacocloud.Taco;
@@ -24,7 +21,6 @@ import tacocloud.data.IngredientRepository;
 
 import javax.validation.Valid;
 
-@Slf4j
 @Controller
 @RequestMapping("/design")
 @SessionAttributes("tacoOrder")
@@ -72,7 +68,6 @@ public class DesignTacoController {
         }
 
         tacoOrder.addTaco(taco);
-        log.info("Processing taco: {}", taco);
 
         return "redirect:/orders/current";
     }
