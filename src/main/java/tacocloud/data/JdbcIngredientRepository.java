@@ -23,14 +23,14 @@ public class JdbcIngredientRepository implements IngredientRepository {
     @Override
     public Iterable<Ingredients> findAll() {
         return jdbcTemplate.query(
-                "select id, name, type from Ingredients",
+                "select id, name, type from Ingredient",
                 this::mapRowToIngredient);
     }
 
     @Override
     public Optional<Ingredients> findBiId(String id) {
         List<Ingredients> result = jdbcTemplate.query(
-                "select id, name, type from Ingredients where id = ?",
+                "select id, name, type from Ingredient where id = ?",
                 this::mapRowToIngredient,
                 id);
         return result.size() == 0 ?
@@ -41,7 +41,7 @@ public class JdbcIngredientRepository implements IngredientRepository {
     @Override
     public Ingredients save(Ingredients ingredient) {
         jdbcTemplate.update(
-                "insert into Ingredients (id, name, type) values (?, ?, ?)",
+                "insert into Ingredient (id, name, type) values (?, ?, ?)",
                 ingredient.getId(),
                 ingredient.getName(),
                 ingredient.getType().toString());
