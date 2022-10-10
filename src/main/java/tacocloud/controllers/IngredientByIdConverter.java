@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import tacocloud.Ingredients;
+import tacocloud.Ingredient;
 import tacocloud.data.IngredientRepository;
 
 @Component
-public class IngredientByIdConverter implements Converter<String, Ingredients> {
+public class IngredientByIdConverter implements Converter<String, Ingredient> {
     private IngredientRepository ingredientRepository;
 
     @Autowired
@@ -17,7 +17,7 @@ public class IngredientByIdConverter implements Converter<String, Ingredients> {
     }
 
     @Override
-    public Ingredients convert(String id) {
-        return ingredientRepository.findBiId(id).orElse(null);
+    public Ingredient convert(String id) {
+        return ingredientRepository.findById(id).orElse(null);
     }
 }

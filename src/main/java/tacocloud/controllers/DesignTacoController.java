@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import tacocloud.Ingredients;
+import tacocloud.Ingredient;
 import tacocloud.Type;
 import tacocloud.Taco;
 import tacocloud.TacoOrder;
@@ -35,7 +35,7 @@ public class DesignTacoController {
 
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
-        Iterable<Ingredients> ingredients = ingredientRepository.findAll();
+        Iterable<Ingredient> ingredients = ingredientRepository.findAll();
 
         Type[] types = Type.values();
         for (Type type : types) {
@@ -72,7 +72,7 @@ public class DesignTacoController {
         return "redirect:/orders/current";
     }
 
-    private Iterable<Ingredients> filterByType(Iterable<Ingredients> ingredients, Type type) {
+    private Iterable<Ingredient> filterByType(Iterable<Ingredient> ingredients, Type type) {
         return StreamSupport.stream(
                 ingredients.spliterator(), false)
                 .filter(i -> i.getType().equals(type))

@@ -4,14 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import tacocloud.controllers.DesignTacoController;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -21,21 +19,21 @@ public class DesignTacoControllerTest {
     @Autowired
     private MockMvc _mockMvc;
 
-    private List<Ingredients> ingredients;
+    private List<Ingredient> ingredients;
 
     @BeforeEach
     public void setup() {
         ingredients = Arrays.asList(
-                new Ingredients("FLTO", "Flour Tortilla", Type.WRAP),
-                new Ingredients("COTO", "Corn Tortilla", Type.WRAP),
-                new Ingredients("GRBF", "Ground Beef", Type.MEAT),
-                new Ingredients("CARN", "Carnitas", Type.MEAT),
-                new Ingredients("TMTO", "Diced Tomatoes", Type.VEGGIES),
-                new Ingredients("LETC", "Lettuce", Type.VEGGIES),
-                new Ingredients("CHED", "Cheddar", Type.CHEESE),
-                new Ingredients("JACK", "Monterrey Jack", Type.CHEESE),
-                new Ingredients("SLSA", "Salsa", Type.SAUCE),
-                new Ingredients("SRCR", "Sour Cream", Type.SAUCE)
+                new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
+                new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
+                new Ingredient("GRBF", "Ground Beef", Type.MEAT),
+                new Ingredient("CARN", "Carnitas", Type.MEAT),
+                new Ingredient("TMTO", "Diced Tomatoes", Type.VEGGIES),
+                new Ingredient("LETC", "Lettuce", Type.VEGGIES),
+                new Ingredient("CHED", "Cheddar", Type.CHEESE),
+                new Ingredient("JACK", "Monterrey Jack", Type.CHEESE),
+                new Ingredient("SLSA", "Salsa", Type.SAUCE),
+                new Ingredient("SRCR", "Sour Cream", Type.SAUCE)
         );
     }
 
