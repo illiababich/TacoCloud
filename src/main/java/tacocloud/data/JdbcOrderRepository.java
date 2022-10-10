@@ -1,12 +1,13 @@
 package tacocloud.data;
 
-import lombok.Data;
+import org.springframework.asm.Type;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import tacocloud.Ingredients;
 import tacocloud.Taco;
 import tacocloud.TacoOrder;
 
@@ -14,6 +15,7 @@ import java.sql.Types;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class JdbcOrderRepository implements OrderRepository {
@@ -56,7 +58,7 @@ public class JdbcOrderRepository implements OrderRepository {
         order.setId(orderId);
 
         List<Taco> tacos = order.getTacos();
-        int i=0;
+        int i = 0;
         for (Taco taco : tacos) {
             saveTaco(orderId, i++, taco);
         }
@@ -65,6 +67,37 @@ public class JdbcOrderRepository implements OrderRepository {
     }
 
     private long saveTaco(Long orderId, int orderKey, Taco taco) {
-        return 1L;
+        taco.setCreatedAt(new Date());
+        PreparedStatementCreatorFactory pscf =
+                new PreparedStatementCreatorFactory(
+                        "insert into Taco "
+                                + "(name, created_at, taco_order, taco_order_key) "
+                                + "values (?, ?, ?, ?)",
+                        Types.VARCHAR, Types.TIMESTAMP, Type.LONG, Type.LONG
+                );
+        pscf.setReturnGeneratedKeys(true);
+        PreparedStatementCreator psc =
+                pscf.newPreparedStatementCreator(
+                        Arrays.asList(
+                                taco.getName(),
+                                taco.getCreatedAt(),
+                                orderId,
+                                orderKey));
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcOperations.update(psc, keyHolder);
+        long tacoId = Objects.requireNonNull(keyHolder.getKey()).longValue();
+        taco.setId(tacoId);
+        saveIngredientRefs(tacoId, taco.getIngredients());
+        return tacoId;
+    }
+
+    private void saveIngredientRefs(long tacoId, List<Ingredients> ingredients) {
+        int key = 0;
+        for (Ingredients ingredient : ingredients) {
+            jdbcOperations.update(
+                    "insert into Ingredient_Ref (ingredient, taco, taco_key) "
+                            + "values (?, ?, ?)",
+                    ingredient.getId(), tacoId, key++);
+        }
     }
 }
