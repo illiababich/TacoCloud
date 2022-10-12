@@ -5,7 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import tacocloud.*;
+import tacocloud.Ingredient;
+import tacocloud.Taco;
+import tacocloud.TacoOrder;
+import tacocloud.Type;
 import tacocloud.data.IngredientRepository;
 
 import javax.validation.Valid;
@@ -58,7 +61,7 @@ public class DesignTacoController {
             return "design";
         }
 
-        tacoOrder.addTaco(new TacoUDT(taco.getName(), taco.getIngredients()));
+        tacoOrder.addTaco(taco);
 
         return "redirect:/orders/current";
     }
