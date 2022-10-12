@@ -9,6 +9,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @Table("orders")
 public class TacoOrder implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @PrimaryKey
@@ -44,7 +46,7 @@ public class TacoOrder implements Serializable {
     @CreditCardNumber(message="Not a valid credit card number")
     private String ccNumber;
 
-    @Pattern(regexp="^(0[1-9]|1[0-2])([\\/])([2-9]\\d)$", message="Must be formatted MM/YY")
+    @Pattern(regexp="^(0[1-9]|1[0-2])/([2-9]\\d)$", message="Must be formatted MM/YY")
     private String ccExpiration;
 
     @Pattern(regexp="^\\d\\d\\d$", message="Invalid CVV")

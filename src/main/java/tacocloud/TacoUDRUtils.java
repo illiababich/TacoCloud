@@ -10,7 +10,7 @@ public class TacoUDRUtils {
 
     public static List<IngredientUDT> toIngredientUDTs(List<Ingredient> ingredients) {
         return ingredients.stream()
-                .map(ingredient -> toIngredientUDT(ingredient))
+                .map(TacoUDRUtils::toIngredientUDT)
                 .collect(Collectors.toList());
     }
 

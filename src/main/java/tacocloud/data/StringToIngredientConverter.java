@@ -1,5 +1,6 @@
 package tacocloud.data;
 
+import lombok.NonNull;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import tacocloud.Ingredient;
@@ -10,14 +11,14 @@ import java.util.Optional;
 @Component
 public class StringToIngredientConverter implements Converter<String, IngredientUDT> {
 
-  private IngredientRepository ingredientRepository;
+  private final IngredientRepository ingredientRepository;
 
   public StringToIngredientConverter(IngredientRepository ingredientRepository) {
     this.ingredientRepository = ingredientRepository;
   }
   
   @Override
-  public IngredientUDT convert(String id) {
+  public IngredientUDT convert(@NonNull String id) {
     Optional<Ingredient> ingredient = ingredientRepository.findById(id);
     if (ingredient.isEmpty()) {
       return null;
@@ -27,5 +28,4 @@ public class StringToIngredientConverter implements Converter<String, Ingredient
       return new IngredientUDT(i.getName(), i.getType());
     }).get();
   }
-  
 }
