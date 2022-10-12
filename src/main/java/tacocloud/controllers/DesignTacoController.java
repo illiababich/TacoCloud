@@ -1,25 +1,16 @@
 package tacocloud.controllers;
 
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
-
-import tacocloud.Ingredient;
-import tacocloud.Type;
-import tacocloud.Taco;
-import tacocloud.TacoOrder;
+import org.springframework.web.bind.annotation.*;
+import tacocloud.*;
 import tacocloud.data.IngredientRepository;
 
 import javax.validation.Valid;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Controller
 @RequestMapping("/design")
@@ -67,7 +58,7 @@ public class DesignTacoController {
             return "design";
         }
 
-        tacoOrder.addTaco(taco);
+        tacoOrder.addTaco(new TacoUDT(taco.getName(), taco.getIngredients()));
 
         return "redirect:/orders/current";
     }
