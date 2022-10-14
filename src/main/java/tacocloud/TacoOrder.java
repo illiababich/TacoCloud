@@ -2,9 +2,8 @@ package tacocloud;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.io.Serial;
@@ -14,13 +13,15 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@Document
+@Entity
 public class TacoOrder implements Serializable {
+
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     private Date placedAt = new Date();
 
@@ -48,6 +49,7 @@ public class TacoOrder implements Serializable {
     @Pattern(regexp="^\\d\\d\\d$", message="Invalid CVV")
     private String ccCVV;
 
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Taco> tacos = new ArrayList<>();
 
     public void addTaco(Taco taco) {
