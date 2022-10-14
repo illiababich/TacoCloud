@@ -13,6 +13,13 @@ public class TacoCloudApplication implements WebMvcConfigurer {
         SpringApplication.run(TacoCloudApplication.class, args);
     }
 
+    //TODO: login credentials are incorrect show an error while logging in
+    //TODO: registration validation
+    //TODO: Solve a problem for entry /design
+    //TODO: write tests for all the classes
+    //TODO: http://localhost:8080/login?error while logging out from the home page
+    //TODO: no tacos are shown while processing the order
+
     @Bean
     public CommandLineRunner dataLoader(IngredientRepository repo) {
         return new CommandLineRunner() {

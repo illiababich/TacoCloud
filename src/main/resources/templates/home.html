@@ -6,13 +6,16 @@
   <title>Taco Cloud</title>
 </head>
 
-<body>
-<img alt="image not found"
-     width="100" height="100"
-     th:src="@{/images/TacoCloud.png}"/>
+  <body>
+    <img alt="image not found"
+         width="100" height="100"
+         th:src="@{/images/TacoCloud.png}"/>
 
-<h1>Welcome to Cinco De Mayo!</h1>
-<a th:href="@{/design}" id="design">Design a taco</a>
-</body>
+    <h1>Welcome to Cinco De Mayo!</h1>
+      <form method="POST" th:action="@{/login}" id="logoutForm">
+        <input type="submit" value="Logout"/>
+      </form>
+    <a th:href="@{/design}" id="design">Design a taco</a>
+  </body>
 
 </html>

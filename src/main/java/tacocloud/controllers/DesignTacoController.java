@@ -5,13 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import tacocloud.Ingredient;
-import tacocloud.Taco;
-import tacocloud.TacoOrder;
-import tacocloud.Type;
+import tacocloud.*;
 import tacocloud.data.IngredientRepository;
+import tacocloud.data.TacoRepository;
+import tacocloud.data.UserRepository;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -22,9 +22,15 @@ public class DesignTacoController {
 
     private final IngredientRepository ingredientRepository;
 
+    private final TacoRepository tacoRepository;
+
+    private final UserRepository userRepository;
+
     @Autowired
-    public DesignTacoController(IngredientRepository ingredientRepository) {
-        this.ingredientRepository = ingredientRepository;
+    public DesignTacoController(IngredientRepository ingredientRepo, TacoRepository tacoRepo, UserRepository userRepo) {
+        this.ingredientRepository = ingredientRepo;
+        this.tacoRepository = tacoRepo;
+        this.userRepository = userRepo;
     }
 
     @ModelAttribute
@@ -39,7 +45,7 @@ public class DesignTacoController {
         }
     }
 
-    @ModelAttribute(name = "tacoOrder")
+    @ModelAttribute(name = "tacoOrder", value = "tacoOrder")
     public TacoOrder order() {
         return new TacoOrder();
     }
@@ -49,6 +55,12 @@ public class DesignTacoController {
         return new Taco();
     }
 
+    @ModelAttribute(name = "user")
+    public User user(Principal principal) {
+        String username = principal.getName();
+        return userRepository.findByUsername(username);
+    }
+
     @GetMapping
     public String showDesignForm() {
         return "design";
@@ -56,12 +68,14 @@ public class DesignTacoController {
 
     @PostMapping
     public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder) {
+        //log.info("   --- Saving taco");
 
         if (errors.hasErrors()) {
             return "design";
         }
 
-        tacoOrder.addTaco(taco);
+        Taco saved = tacoRepository.save(taco);
+        tacoOrder.addTaco(saved);
 
         return "redirect:/orders/current";
     }
