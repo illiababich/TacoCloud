@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,16 +13,20 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name = "taco_order")
 public class TacoOrder implements Serializable {
 
-    @Serial
+    //@Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private Date placedAt = new Date();
+    @ManyToOne
+    private User user;
+
+    private Date placedAt;
 
     @NotBlank(message="Delivery name is required")
     private String deliveryName;
@@ -49,10 +52,13 @@ public class TacoOrder implements Serializable {
     @Pattern(regexp="^\\d\\d\\d$", message="Invalid CVV")
     private String ccCVV;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(targetEntity=Taco.class)
     private List<Taco> tacos = new ArrayList<>();
 
     public void addTaco(Taco taco) {
         this.tacos.add(taco);
     }
+
+    @PrePersist
+    public void placedAt() {this.placedAt = new Date();}
 }

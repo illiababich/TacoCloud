@@ -1,5 +1,6 @@
 package tacocloud.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import java.util.stream.StreamSupport;
 @Controller
 @RequestMapping("/design")
 @SessionAttributes("tacoOrder")
+@Slf4j
 public class DesignTacoController {
 
     private final IngredientRepository ingredientRepository;
@@ -45,7 +47,7 @@ public class DesignTacoController {
         }
     }
 
-    @ModelAttribute(name = "tacoOrder", value = "tacoOrder")
+    @ModelAttribute(name = "tacoOrder")//, value = "tacoOrder")
     public TacoOrder order() {
         return new TacoOrder();
     }
@@ -68,7 +70,7 @@ public class DesignTacoController {
 
     @PostMapping
     public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder) {
-        //log.info("   --- Saving taco");
+        log.info("   --- Saving taco");
 
         if (errors.hasErrors()) {
             return "design";

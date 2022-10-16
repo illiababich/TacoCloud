@@ -19,6 +19,8 @@ public class TacoCloudApplication implements WebMvcConfigurer {
     //TODO: write tests for all the classes
     //TODO: http://localhost:8080/login?error while logging out from the home page
     //TODO: no tacos are shown while processing the order
+    //TODO: password confirmation on the login page
+    //TODO: check if user already exists while registering
 
     @Bean
     public CommandLineRunner dataLoader(IngredientRepository repo) {
