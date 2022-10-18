@@ -18,7 +18,6 @@ import java.util.Collection;
 @RequiredArgsConstructor
 @Table(name = "TACO_USER")
 public class User implements UserDetails {
-    //@Serial
     private static final long serialVersionUID = 1L;
 
     @Id

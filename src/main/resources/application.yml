@@ -1,12 +1,4 @@
 spring:
-  h2:
-    console:
-      enabled=true:
   datasource:
     generate-unique-name: false
     name: tacocloud
-  jpa:
-    database-platform=org:
-      hibernate:
-        dialect:
-          H2Dialect:

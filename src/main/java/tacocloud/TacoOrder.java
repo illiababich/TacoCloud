@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,7 +17,7 @@ import java.util.List;
 @Table(name = "taco_order")
 public class TacoOrder implements Serializable {
 
-    //@Serial
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -25,7 +26,6 @@ public class TacoOrder implements Serializable {
 
     @ManyToOne
     private User user;
-
     private Date placedAt;
 
     @NotBlank(message="Delivery name is required")

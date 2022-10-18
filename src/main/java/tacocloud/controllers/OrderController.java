@@ -48,7 +48,6 @@ public class OrderController {
     public String processOrder(@Valid TacoOrder order, Errors errors, SessionStatus sessionStatus, @AuthenticationPrincipal User user) {
         if (errors.hasErrors()) {
             return "orderForm";
-            //return "redirect:/orders/current";
         }
 
         order.setUser(user);

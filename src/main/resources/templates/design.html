@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" lang="en">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Taco Cloud</title>
     <link rel="stylesheet" th:href="@{/styles.css}" />
 </head>
 
 <body>
-<img width="100" height="100" th:src="@{/images/TacoCloud.png}"/>
 <h1>Design your taco!</h1>
+<h2>Feelin' hungry, <span th:text="${user.fullname}">NAME</span>?</h2>
+<img alt="image not found"
+     width="100" height="100"
+     th:src="@{/images/TacoCloud.png}"/>
 
-<form method="POST" th:object="${taco}">
+<form method="POST" th:action="@{/logout}" id="logoutForm">
+    <input type="submit" value="Logout"/>
+</form>
 
-      <span class="validationError"
-            th:if="${#fields.hasErrors('ingredients')}"
-            th:errors="*{ingredients}">Ingredient Error
-      </span>
+<form th:method="POST" th:object="${taco}" th:action="@{/design}" id="tacoForm">
 
-<!--    <div th:if="${#fields.hasErrors()}">-->
-<!--        <span class="validationError">-->
-<!--        Please correct the problems below and resubmit.-->
-<!--        </span>-->
-<!--    </div>-->
+    <span class="validationError"
+          th:if="${#fields.hasErrors('ingredients')}"
+          th:errors="*{ingredients}">Ingredient Error</span>
 
     <div class="grid">
         <div class="ingredient-group" id="wraps">
