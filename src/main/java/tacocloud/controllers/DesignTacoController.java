@@ -84,7 +84,6 @@ public class DesignTacoController {
 
     @PostMapping
     public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder order) {
-        log.info("   --- Saving taco");
 
         if (errors.hasErrors()) {
             return "design";
@@ -92,6 +91,7 @@ public class DesignTacoController {
 
         Taco saved = tacoRepository.save(taco);
         order.addTaco(saved);
+        System.out.println(order.toString());
 
         return "redirect:/orders/current";
     }

@@ -17,7 +17,6 @@ public class TacoCloudApplication implements WebMvcConfigurer {
 
     //TODO: login credentials are incorrect show an error while logging in
     //TODO: registration fields validation
-    //TODO: [P1]Solve a problem for entry /design
     //TODO: write tests for all the classes
     //TODO: http://localhost:8080/login?error while logging out from the home page
     //TODO: no tacos are shown while processing the order
