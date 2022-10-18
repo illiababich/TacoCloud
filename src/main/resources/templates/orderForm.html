@@ -9,6 +9,9 @@
 <body>
 
 <form method="POST" th:action="@{/orders}" th:object="${tacoOrder}">
+
+    **_(<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>)_**
+
     <img alt="image not found"
          width="100" height="100"
          th:src="@{/images/TacoCloud.png}"/>

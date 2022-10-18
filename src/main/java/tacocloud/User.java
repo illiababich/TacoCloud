@@ -9,8 +9,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity
@@ -18,6 +20,7 @@ import java.util.Collection;
 @RequiredArgsConstructor
 @Table(name = "TACO_USER")
 public class User implements UserDetails {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -34,7 +37,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE USER"));
+        return List.of(new SimpleGrantedAuthority("USER"));
     }
 
     @Override
