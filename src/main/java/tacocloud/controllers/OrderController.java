@@ -15,7 +15,7 @@ import javax.validation.Valid;
 @Slf4j
 @Controller
 @RequestMapping("/orders")
-@SessionAttributes("tacoOrder")
+@SessionAttributes("order")
 public class OrderController {
     private final OrderRepository orderRepository;
 
@@ -25,6 +25,9 @@ public class OrderController {
 
     @GetMapping("/current")
     public String orderForm(@AuthenticationPrincipal User user, @ModelAttribute TacoOrder order) {
+
+        System.out.println(order.toString());
+
         if (order.getDeliveryName() == null) {
             order.setDeliveryName(user.getFullname());
         }
@@ -54,6 +57,8 @@ public class OrderController {
 
         orderRepository.save(order);
         sessionStatus.setComplete();
+
+        System.out.println("tacos in order: " + order.getTacos());
 
         return "redirect:/orders/current/success";
     }
