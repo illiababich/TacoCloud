@@ -15,7 +15,7 @@ import javax.validation.Valid;
 @Slf4j
 @Controller
 @RequestMapping("/orders")
-@SessionAttributes("order")
+@SessionAttributes("tacoOrder")
 public class OrderController {
     private final OrderRepository orderRepository;
 
@@ -24,24 +24,24 @@ public class OrderController {
     }
 
     @GetMapping("/current")
-    public String orderForm(@AuthenticationPrincipal User user, @ModelAttribute TacoOrder order) {
+    public String orderForm(@AuthenticationPrincipal User user, @ModelAttribute TacoOrder tacoOrder) {
 
-        System.out.println(order.toString());
+        System.out.println(tacoOrder.getTacos());
 
-        if (order.getDeliveryName() == null) {
-            order.setDeliveryName(user.getFullname());
+        if (tacoOrder.getDeliveryName() == null) {
+            tacoOrder.setDeliveryName(user.getFullname());
         }
-        if (order.getDeliveryStreet() == null) {
-            order.setDeliveryStreet(user.getStreet());
+        if (tacoOrder.getDeliveryStreet() == null) {
+            tacoOrder.setDeliveryStreet(user.getStreet());
         }
-        if (order.getDeliveryCity() == null) {
-            order.setDeliveryCity(user.getCity());
+        if (tacoOrder.getDeliveryCity() == null) {
+            tacoOrder.setDeliveryCity(user.getCity());
         }
-        if (order.getDeliveryState() == null) {
-            order.setDeliveryState(user.getState());
+        if (tacoOrder.getDeliveryState() == null) {
+            tacoOrder.setDeliveryState(user.getState());
         }
-        if (order.getDeliveryZip() == null) {
-            order.setDeliveryZip(user.getZip());
+        if (tacoOrder.getDeliveryZip() == null) {
+            tacoOrder.setDeliveryZip(user.getZip());
         }
 
         return "orderForm";
@@ -56,9 +56,10 @@ public class OrderController {
         order.setUser(user);
 
         orderRepository.save(order);
-        sessionStatus.setComplete();
 
-        System.out.println("tacos in order: " + order.getTacos());
+        System.out.println(order.toString());
+
+        sessionStatus.setComplete();
 
         return "redirect:/orders/current/success";
     }

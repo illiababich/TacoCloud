@@ -12,11 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
 import tacocloud.Ingredient;
@@ -30,7 +26,7 @@ import tacocloud.data.UserRepository;
 
 @Controller
 @RequestMapping("/design")
-@SessionAttributes("order")
+@SessionAttributes("tacoOrder")
 @Slf4j
 @Data
 public class DesignTacoController {
@@ -61,7 +57,7 @@ public class DesignTacoController {
         }
     }
 
-    @ModelAttribute(name = "order")
+    @ModelAttribute(name = "tacoOrder", value = "tacoOrder")
     public TacoOrder order() {
         return new TacoOrder();
     }
@@ -83,15 +79,15 @@ public class DesignTacoController {
     }
 
     @PostMapping
-    public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder order) {
+    public String processTaco(@Valid Taco taco, Errors errors, @SessionAttribute TacoOrder tacoOrder) {
 
         if (errors.hasErrors()) {
             return "design";
         }
 
         Taco saved = tacoRepository.save(taco);
-        order.addTaco(saved);
-        System.out.println(order.toString());
+        tacoOrder.addTaco(saved);
+        System.out.println(tacoOrder.getTacos());
 
         return "redirect:/orders/current";
     }

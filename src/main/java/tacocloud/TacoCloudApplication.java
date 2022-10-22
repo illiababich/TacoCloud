@@ -19,7 +19,6 @@ public class TacoCloudApplication implements WebMvcConfigurer {
     //TODO: registration fields validation
     //TODO: write tests for all the classes
     //TODO: http://localhost:8080/login?error while logging out from the home page
-    //TODO: no tacos are shown while processing the order
     //TODO: password confirmation on the register page
     //TODO: check if user already exists while registering
 
