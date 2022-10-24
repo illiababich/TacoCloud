@@ -16,13 +16,12 @@ public class TacoCloudApplication implements WebMvcConfigurer {
     }
 
     //TODO: login credentials are incorrect show an error while logging in
-    //TODO: registration fields validation
+    //TODO: registration fields validation (unique username, confirm password, full name and phone not null)
     //TODO: write tests for all the classes
-    //TODO: http://localhost:8080/login?error while logging out from the home page
-    //TODO: password confirmation on the register page
-    //TODO: check if user already exists while registering
+    // illiababich
 
     @Bean
+    //@Profile("!prod")
     public CommandLineRunner dataLoader(IngredientRepository ingredientRepo, UserRepository userRepo) {
         return args -> {
             ingredientRepo.save(new Ingredient("FLTO", "Flour Tortilla", Type.WRAP));
