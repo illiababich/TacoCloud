@@ -1,8 +1,7 @@
-package tacocloud.security;
+package tacocloud;
 
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import tacocloud.User;
 
 @Data
 public class RegistrationForm {
