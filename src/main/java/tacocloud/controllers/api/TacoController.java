@@ -2,6 +2,7 @@ package tacocloud.controllers.api;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/tacos", produces = "application/json")
 @CrossOrigin(origins = "http://tacocloud:8080")
+@RestResource(rel = "rel", path = "tacos")
 // https://localhost:8443/api/tacos?recent to get the json of development config
 public class TacoController {
     private final TacoRepository tacoRepository;
